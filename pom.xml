@@ -5,7 +5,7 @@
 
     <groupId>cn.javayuan.start</groupId>
     <artifactId>start</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>Start</name>
 
@@ -536,7 +536,15 @@
                             <image>openjdk:11-jre-slim-stretch</image>
                         </from>
                         <to>
-                            <image>start:latest</image>
+                            <image>ccr.ccs.tencentyun.com/limy/start:${project.version}</image>
+                            <auth>
+                                <username>
+                                    1371271347
+                                </username>
+                                <password>
+                                    limingyuan1996
+                                </password>
+                            </auth>
                         </to>
                         <container>
                             <entrypoint>

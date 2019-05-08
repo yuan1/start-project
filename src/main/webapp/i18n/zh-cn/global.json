@@ -1,12 +1,20 @@
 {
   "global": {
-    "title": "Start",
+    "title": "HUA起飞项目",
     "browsehappy": "您目前使用<strong>过于老旧</strong>的浏览器, 建议您<a href=\"http://browsehappy.com/?locale=en\">升级浏览器</a>让您有更佳的上网体验.",
     "menu": {
       "home": "首页",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "数据",
+        "region": "地区",
+        "country": "国家",
+        "location": "位置",
+        "department": "部门",
+        "task": "任务",
+        "employee": "员工",
+        "job": "工作",
+        "jobHistory": "工作历史",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -130,6 +138,5 @@
     "emailexists": "该邮箱已被使用!",
     "idexists": "新建的 {{entityName}} 不能包含ID",
     "idnull": "Invalid ID"
-  },
-  "footer": "这里是页脚"
+  }
 }

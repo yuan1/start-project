@@ -6,7 +6,7 @@ services:
     #     - ~/volumes/jhipster/start/mysql/:/var/lib/mysql/
     environment:
       - MYSQL_USER=root
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=1371271347
       - MYSQL_DATABASE=start
     ports:
       - 3306:3306

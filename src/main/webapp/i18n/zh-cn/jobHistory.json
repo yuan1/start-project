@@ -1,0 +1,26 @@
+{
+  "startApp": {
+    "jobHistory": {
+      "home": {
+        "title": "工作历史",
+        "createLabel": "创建新工作历史",
+        "createOrEditLabel": "创建或编辑工作历史"
+      },
+      "created": "工作历史 {{ param }} 创建成功",
+      "updated": "工作历史 {{ param }} 更新成功",
+      "deleted": "工作历史 {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除工作历史 {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "工作历史"
+      },
+      "startDate": "开始时间",
+      "endDate": "结束时间",
+      "language": "语言",
+      "job": "工作",
+      "department": "部门",
+      "employee": "员工"
+    }
+  }
+}
