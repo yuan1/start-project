@@ -1,7 +1,7 @@
 version: '2'
 services:
   start-app:
-    image: start
+    image: ccr.ccs.tencentyun.com/limy/start:0.0.1
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,swagger
