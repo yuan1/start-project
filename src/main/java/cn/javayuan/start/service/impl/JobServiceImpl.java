@@ -61,15 +61,6 @@ public class JobServiceImpl implements JobService {
             .map(jobMapper::toDto);
     }
 
-    /**
-     * Get all the jobs with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    public Page<JobDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return jobRepository.findAllWithEagerRelationships(pageable).map(jobMapper::toDto);
-    }
-    
 
     /**
      * Get one job by id.
@@ -81,7 +72,7 @@ public class JobServiceImpl implements JobService {
     @Transactional(readOnly = true)
     public Optional<JobDTO> findOne(Long id) {
         log.debug("Request to get Job : {}", id);
-        return jobRepository.findOneWithEagerRelationships(id)
+        return jobRepository.findById(id)
             .map(jobMapper::toDto);
     }
 

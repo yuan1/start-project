@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
@@ -16,23 +19,62 @@ export class JobService {
   constructor(protected http: HttpClient) {}
 
   create(job: IJob): Observable<EntityResponseType> {
-    return this.http.post<IJob>(this.resourceUrl, job, { observe: 'response' });
+    const copy = this.convertDateFromClient(job);
+    return this.http
+      .post<IJob>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   update(job: IJob): Observable<EntityResponseType> {
-    return this.http.put<IJob>(this.resourceUrl, job, { observe: 'response' });
+    const copy = this.convertDateFromClient(job);
+    return this.http
+      .put<IJob>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IJob>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http
+      .get<IJob>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<IJob[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http
+      .get<IJob[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateFromClient(job: IJob): IJob {
+    const copy: IJob = Object.assign({}, job, {
+      deliveryDate: job.deliveryDate != null && job.deliveryDate.isValid() ? job.deliveryDate.toJSON() : null,
+      startDate: job.startDate != null && job.startDate.isValid() ? job.startDate.toJSON() : null,
+      endDate: job.endDate != null && job.endDate.isValid() ? job.endDate.toJSON() : null
+    });
+    return copy;
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.deliveryDate = res.body.deliveryDate != null ? moment(res.body.deliveryDate) : null;
+      res.body.startDate = res.body.startDate != null ? moment(res.body.startDate) : null;
+      res.body.endDate = res.body.endDate != null ? moment(res.body.endDate) : null;
+    }
+    return res;
+  }
+
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((job: IJob) => {
+        job.deliveryDate = job.deliveryDate != null ? moment(job.deliveryDate) : null;
+        job.startDate = job.startDate != null ? moment(job.startDate) : null;
+        job.endDate = job.endDate != null ? moment(job.endDate) : null;
+      });
+    }
+    return res;
   }
 }

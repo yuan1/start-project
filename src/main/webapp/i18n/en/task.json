@@ -17,6 +17,9 @@
       },
       "title": "Title",
       "description": "Description",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "status": "Status",
       "job": "Job"
     }
   }

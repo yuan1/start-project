@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Job} and its DTO {@link JobDTO}.
  */
-@Mapper(componentModel = "spring", uses = {EmployeeMapper.class, TaskMapper.class})
+@Mapper(componentModel = "spring", uses = {EmployeeMapper.class})
 public interface JobMapper extends EntityMapper<JobDTO, Job> {
 
     @Mapping(source = "employee.id", target = "employeeId")
@@ -16,6 +16,7 @@ public interface JobMapper extends EntityMapper<JobDTO, Job> {
     JobDTO toDto(Job job);
 
     @Mapping(source = "employeeId", target = "employee")
+    @Mapping(target = "tasks", ignore = true)
     Job toEntity(JobDTO jobDTO);
 
     default Job fromId(Long id) {

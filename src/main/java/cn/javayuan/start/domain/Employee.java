@@ -1,15 +1,17 @@
 package cn.javayuan.start.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Objects;
 
 /**
  * The Employee entity.
@@ -25,9 +27,9 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * The firstname attribute.
-     */
+    @Column(name = "login")
+    private String login;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -40,26 +42,20 @@ public class Employee implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "hire_date")
-    private Instant hireDate;
-
     @Column(name = "salary")
     private Long salary;
-
-    @Column(name = "commission_pct")
-    private Long commissionPct;
 
     @ManyToOne
     @JsonIgnoreProperties("employees")
     private Department department;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
     @OneToMany(mappedBy = "employee")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Job> jobs = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties("employees")
-    private Employee manager;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -68,6 +64,19 @@ public class Employee implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public Employee login(String login) {
+        this.login = login;
+        return this;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getFirstName() {
@@ -122,19 +131,6 @@ public class Employee implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Instant getHireDate() {
-        return hireDate;
-    }
-
-    public Employee hireDate(Instant hireDate) {
-        this.hireDate = hireDate;
-        return this;
-    }
-
-    public void setHireDate(Instant hireDate) {
-        this.hireDate = hireDate;
-    }
-
     public Long getSalary() {
         return salary;
     }
@@ -148,19 +144,6 @@ public class Employee implements Serializable {
         this.salary = salary;
     }
 
-    public Long getCommissionPct() {
-        return commissionPct;
-    }
-
-    public Employee commissionPct(Long commissionPct) {
-        this.commissionPct = commissionPct;
-        return this;
-    }
-
-    public void setCommissionPct(Long commissionPct) {
-        this.commissionPct = commissionPct;
-    }
-
     public Department getDepartment() {
         return department;
     }
@@ -172,6 +155,19 @@ public class Employee implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Employee user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Job> getJobs() {
@@ -198,19 +194,6 @@ public class Employee implements Serializable {
     public void setJobs(Set<Job> jobs) {
         this.jobs = jobs;
     }
-
-    public Employee getManager() {
-        return manager;
-    }
-
-    public Employee manager(Employee employee) {
-        this.manager = employee;
-        return this;
-    }
-
-    public void setManager(Employee employee) {
-        this.manager = employee;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -233,13 +216,12 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employee{" +
             "id=" + getId() +
+            ", login='" + getLogin() + "'" +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", email='" + getEmail() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
-            ", hireDate='" + getHireDate() + "'" +
             ", salary=" + getSalary() +
-            ", commissionPct=" + getCommissionPct() +
             "}";
     }
 }

@@ -1,0 +1,11 @@
+{
+  "startApp": {
+    "TaskStatus": {
+      "null": "",
+      "RELEASING": "RELEASING",
+      "PAUSING": "PAUSING",
+      "WORKING": "WORKING",
+      "ENDING": "ENDING"
+    }
+  }
+}

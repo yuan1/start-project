@@ -3,8 +3,8 @@
     "task": {
       "home": {
         "title": "任务",
-        "createLabel": "创建新任务",
-        "createOrEditLabel": "创建或编辑任务"
+        "createLabel": "创建新 任务",
+        "createOrEditLabel": "创建或编辑 任务"
       },
       "created": "任务 {{ param }} 创建成功",
       "updated": "任务 {{ param }} 更新成功",
@@ -16,7 +16,10 @@
         "title": "任务"
       },
       "title": "标题",
-      "description": "备注",
+      "description": "介绍",
+      "startDate": "开始时间",
+      "endDate": "结束时间",
+      "status": "状态",
       "job": "工作"
     }
   }

@@ -19,7 +19,35 @@
                     <input type="text" class="form-control" name="description" id="field_description"
                            formControlName="description"/>
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="startApp.task.startDate" for="field_startDate">Start Date</label>
+                    <div class="d-flex">
+                        <input id="field_startDate" type="datetime-local" class="form-control" name="startDate" formControlName="startDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="startApp.task.endDate" for="field_endDate">End Date</label>
+                    <div class="d-flex">
+                        <input id="field_endDate" type="datetime-local" class="form-control" name="endDate" formControlName="endDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="startApp.task.status" for="field_status">Status</label>
+                    <select class="form-control" name="status" formControlName="status" id="field_status">
+                        <option value="RELEASING">{{'startApp.TaskStatus.RELEASING' | translate}}</option>
+                        <option value="PAUSING">{{'startApp.TaskStatus.PAUSING' | translate}}</option>
+                        <option value="WORKING">{{'startApp.TaskStatus.WORKING' | translate}}</option>
+                        <option value="ENDING">{{'startApp.TaskStatus.ENDING' | translate}}</option>
+                    </select>
+                </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="startApp.task.job" for="field_job">Job</label>
+                    <select class="form-control" id="field_job" name="job" formControlName="jobId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="jobOption.id" *ngFor="let jobOption of jobs; trackBy: trackJobById">{{jobOption.jobTitle}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static cn.javayuan.start.web.rest.TestUtil.createFormattingConversionService;
@@ -30,6 +32,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import cn.javayuan.start.domain.enumeration.TaskStatus;
 /**
  * Integration tests for the {@Link TaskResource} REST controller.
  */
@@ -41,6 +44,15 @@ public class TaskResourceIT {
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_START_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_START_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_END_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final TaskStatus DEFAULT_STATUS = TaskStatus.RELEASING;
+    private static final TaskStatus UPDATED_STATUS = TaskStatus.PAUSING;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -91,7 +103,10 @@ public class TaskResourceIT {
     public static Task createEntity(EntityManager em) {
         Task task = new Task()
             .title(DEFAULT_TITLE)
-            .description(DEFAULT_DESCRIPTION);
+            .description(DEFAULT_DESCRIPTION)
+            .startDate(DEFAULT_START_DATE)
+            .endDate(DEFAULT_END_DATE)
+            .status(DEFAULT_STATUS);
         return task;
     }
 
@@ -118,6 +133,9 @@ public class TaskResourceIT {
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testTask.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testTask.getStartDate()).isEqualTo(DEFAULT_START_DATE);
+        assertThat(testTask.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testTask.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -153,7 +171,10 @@ public class TaskResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @Test
@@ -168,7 +189,10 @@ public class TaskResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(task.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -193,7 +217,10 @@ public class TaskResourceIT {
         em.detach(updatedTask);
         updatedTask
             .title(UPDATED_TITLE)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .startDate(UPDATED_START_DATE)
+            .endDate(UPDATED_END_DATE)
+            .status(UPDATED_STATUS);
         TaskDTO taskDTO = taskMapper.toDto(updatedTask);
 
         restTaskMockMvc.perform(put("/api/tasks")
@@ -207,6 +234,9 @@ public class TaskResourceIT {
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testTask.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testTask.getStartDate()).isEqualTo(UPDATED_START_DATE);
+        assertThat(testTask.getEndDate()).isEqualTo(UPDATED_END_DATE);
+        assertThat(testTask.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

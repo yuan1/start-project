@@ -7,8 +7,8 @@ import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
 import { IDepartment, Department } from 'app/shared/model/department.model';
 import { DepartmentService } from './department.service';
-import { ILocation } from 'app/shared/model/location.model';
-import { LocationService } from 'app/entities/location';
+import { ICountry } from 'app/shared/model/country.model';
+import { CountryService } from 'app/entities/country';
 
 @Component({
   selector: 'jhi-department-update',
@@ -18,18 +18,18 @@ export class DepartmentUpdateComponent implements OnInit {
   department: IDepartment;
   isSaving: boolean;
 
-  locations: ILocation[];
+  countries: ICountry[];
 
   editForm = this.fb.group({
     id: [],
     departmentName: [null, [Validators.required]],
-    locationId: []
+    countryId: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected departmentService: DepartmentService,
-    protected locationService: LocationService,
+    protected countryService: CountryService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -40,25 +40,25 @@ export class DepartmentUpdateComponent implements OnInit {
       this.updateForm(department);
       this.department = department;
     });
-    this.locationService
+    this.countryService
       .query({ filter: 'department-is-null' })
       .pipe(
-        filter((mayBeOk: HttpResponse<ILocation[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ILocation[]>) => response.body)
+        filter((mayBeOk: HttpResponse<ICountry[]>) => mayBeOk.ok),
+        map((response: HttpResponse<ICountry[]>) => response.body)
       )
       .subscribe(
-        (res: ILocation[]) => {
-          if (!this.department.locationId) {
-            this.locations = res;
+        (res: ICountry[]) => {
+          if (!this.department.countryId) {
+            this.countries = res;
           } else {
-            this.locationService
-              .find(this.department.locationId)
+            this.countryService
+              .find(this.department.countryId)
               .pipe(
-                filter((subResMayBeOk: HttpResponse<ILocation>) => subResMayBeOk.ok),
-                map((subResponse: HttpResponse<ILocation>) => subResponse.body)
+                filter((subResMayBeOk: HttpResponse<ICountry>) => subResMayBeOk.ok),
+                map((subResponse: HttpResponse<ICountry>) => subResponse.body)
               )
               .subscribe(
-                (subRes: ILocation) => (this.locations = [subRes].concat(res)),
+                (subRes: ICountry) => (this.countries = [subRes].concat(res)),
                 (subRes: HttpErrorResponse) => this.onError(subRes.message)
               );
           }
@@ -71,7 +71,7 @@ export class DepartmentUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: department.id,
       departmentName: department.departmentName,
-      locationId: department.locationId
+      countryId: department.countryId
     });
   }
 
@@ -94,7 +94,7 @@ export class DepartmentUpdateComponent implements OnInit {
       ...new Department(),
       id: this.editForm.get(['id']).value,
       departmentName: this.editForm.get(['departmentName']).value,
-      locationId: this.editForm.get(['locationId']).value
+      countryId: this.editForm.get(['countryId']).value
     };
     return entity;
   }
@@ -115,7 +115,7 @@ export class DepartmentUpdateComponent implements OnInit {
     this.jhiAlertService.error(errorMessage, null, null);
   }
 
-  trackLocationById(index: number, item: ILocation) {
+  trackCountryById(index: number, item: ICountry) {
     return item.id;
   }
 }

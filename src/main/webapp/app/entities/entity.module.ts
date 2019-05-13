@@ -13,16 +13,16 @@ import { RouterModule } from '@angular/router';
         loadChildren: './country/country.module#StartCountryModule'
       },
       {
-        path: 'location',
-        loadChildren: './location/location.module#StartLocationModule'
-      },
-      {
         path: 'department',
         loadChildren: './department/department.module#StartDepartmentModule'
       },
       {
         path: 'task',
         loadChildren: './task/task.module#StartTaskModule'
+      },
+      {
+        path: 'job',
+        loadChildren: './job/job.module#StartJobModule'
       },
       {
         path: 'employee',
@@ -33,8 +33,8 @@ import { RouterModule } from '@angular/router';
         loadChildren: './job/job.module#StartJobModule'
       },
       {
-        path: 'job-history',
-        loadChildren: './job-history/job-history.module#StartJobHistoryModule'
+        path: 'department',
+        loadChildren: './department/department.module#StartDepartmentModule'
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

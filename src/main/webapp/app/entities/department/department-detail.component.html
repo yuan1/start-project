@@ -9,10 +9,10 @@
                 <dd>
                     <span>{{department.departmentName}}</span>
                 </dd>
-                <dt><span jhiTranslate="startApp.department.location">Location</span></dt>
+                <dt><span jhiTranslate="startApp.department.country">Country</span></dt>
                 <dd>
-                    <div *ngIf="department.locationId">
-                        <a [routerLink]="['/location', department.locationId, 'view']">{{department.streetAddress}}</a>
+                    <div *ngIf="department.countryId">
+                        <a [routerLink]="['/country', department.countryId, 'view']">{{department.countryName}}</a>
                     </div>
                 </dd>
             </dl>

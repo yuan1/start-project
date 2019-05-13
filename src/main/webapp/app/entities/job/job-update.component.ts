@@ -4,13 +4,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { IJob, Job } from 'app/shared/model/job.model';
 import { JobService } from './job.service';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { EmployeeService } from 'app/entities/employee';
-import { ITask } from 'app/shared/model/task.model';
-import { TaskService } from 'app/entities/task';
 
 @Component({
   selector: 'jhi-job-update',
@@ -22,22 +22,23 @@ export class JobUpdateComponent implements OnInit {
 
   employees: IEmployee[];
 
-  tasks: ITask[];
-
   editForm = this.fb.group({
     id: [],
     jobTitle: [],
+    description: [],
     minSalary: [],
     maxSalary: [],
-    employeeId: [],
-    tasks: []
+    deliveryDate: [],
+    startDate: [],
+    endDate: [],
+    status: [],
+    employeeId: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected jobService: JobService,
     protected employeeService: EmployeeService,
-    protected taskService: TaskService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -55,23 +56,20 @@ export class JobUpdateComponent implements OnInit {
         map((response: HttpResponse<IEmployee[]>) => response.body)
       )
       .subscribe((res: IEmployee[]) => (this.employees = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.taskService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<ITask[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ITask[]>) => response.body)
-      )
-      .subscribe((res: ITask[]) => (this.tasks = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(job: IJob) {
     this.editForm.patchValue({
       id: job.id,
       jobTitle: job.jobTitle,
+      description: job.description,
       minSalary: job.minSalary,
       maxSalary: job.maxSalary,
-      employeeId: job.employeeId,
-      tasks: job.tasks
+      deliveryDate: job.deliveryDate != null ? job.deliveryDate.format(DATE_TIME_FORMAT) : null,
+      startDate: job.startDate != null ? job.startDate.format(DATE_TIME_FORMAT) : null,
+      endDate: job.endDate != null ? job.endDate.format(DATE_TIME_FORMAT) : null,
+      status: job.status,
+      employeeId: job.employeeId
     });
   }
 
@@ -94,10 +92,16 @@ export class JobUpdateComponent implements OnInit {
       ...new Job(),
       id: this.editForm.get(['id']).value,
       jobTitle: this.editForm.get(['jobTitle']).value,
+      description: this.editForm.get(['description']).value,
       minSalary: this.editForm.get(['minSalary']).value,
       maxSalary: this.editForm.get(['maxSalary']).value,
-      employeeId: this.editForm.get(['employeeId']).value,
-      tasks: this.editForm.get(['tasks']).value
+      deliveryDate:
+        this.editForm.get(['deliveryDate']).value != null ? moment(this.editForm.get(['deliveryDate']).value, DATE_TIME_FORMAT) : undefined,
+      startDate:
+        this.editForm.get(['startDate']).value != null ? moment(this.editForm.get(['startDate']).value, DATE_TIME_FORMAT) : undefined,
+      endDate: this.editForm.get(['endDate']).value != null ? moment(this.editForm.get(['endDate']).value, DATE_TIME_FORMAT) : undefined,
+      status: this.editForm.get(['status']).value,
+      employeeId: this.editForm.get(['employeeId']).value
     };
     return entity;
   }
@@ -120,20 +124,5 @@ export class JobUpdateComponent implements OnInit {
 
   trackEmployeeById(index: number, item: IEmployee) {
     return item.id;
-  }
-
-  trackTaskById(index: number, item: ITask) {
-    return item.id;
-  }
-
-  getSelected(selectedVals: Array<any>, option: any) {
-    if (selectedVals) {
-      for (let i = 0; i < selectedVals.length; i++) {
-        if (option.id === selectedVals[i].id) {
-          return selectedVals[i];
-        }
-      }
-    }
-    return option;
   }
 }

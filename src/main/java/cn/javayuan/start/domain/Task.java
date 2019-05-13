@@ -1,16 +1,17 @@
 package cn.javayuan.start.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.Instant;
 import java.util.Objects;
+
+import cn.javayuan.start.domain.enumeration.TaskStatus;
 
 /**
  * Task entity.
@@ -33,10 +34,19 @@ public class Task implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "tasks")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JsonIgnore
-    private Set<Job> jobs = new HashSet<>();
+    @Column(name = "start_date")
+    private Instant startDate;
+
+    @Column(name = "end_date")
+    private Instant endDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private TaskStatus status;
+
+    @ManyToOne
+    @JsonIgnoreProperties("tasks")
+    private Job job;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -73,29 +83,56 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-    public Set<Job> getJobs() {
-        return jobs;
+    public Instant getStartDate() {
+        return startDate;
     }
 
-    public Task jobs(Set<Job> jobs) {
-        this.jobs = jobs;
+    public Task startDate(Instant startDate) {
+        this.startDate = startDate;
         return this;
     }
 
-    public Task addJob(Job job) {
-        this.jobs.add(job);
-        job.getTasks().add(this);
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public Task endDate(Instant endDate) {
+        this.endDate = endDate;
         return this;
     }
 
-    public Task removeJob(Job job) {
-        this.jobs.remove(job);
-        job.getTasks().remove(this);
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public Task status(TaskStatus status) {
+        this.status = status;
         return this;
     }
 
-    public void setJobs(Set<Job> jobs) {
-        this.jobs = jobs;
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public Task job(Job job) {
+        this.job = job;
+        return this;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -121,6 +158,9 @@ public class Task implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
+            ", startDate='" + getStartDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

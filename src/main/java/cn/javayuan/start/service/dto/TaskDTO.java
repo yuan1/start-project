@@ -1,7 +1,12 @@
 package cn.javayuan.start.service.dto;
+
 import io.swagger.annotations.ApiModel;
+
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.Objects;
+
+import cn.javayuan.start.domain.enumeration.TaskStatus;
 
 /**
  * A DTO for the {@link cn.javayuan.start.domain.Task} entity.
@@ -15,6 +20,15 @@ public class TaskDTO implements Serializable {
 
     private String description;
 
+    private Instant startDate;
+
+    private Instant endDate;
+
+    private TaskStatus status;
+
+
+    private Long jobId;
+    private String jobTitle;
 
     public Long getId() {
         return id;
@@ -38,6 +52,46 @@ public class TaskDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Instant getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public Long getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Long jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     @Override
@@ -64,9 +118,14 @@ public class TaskDTO implements Serializable {
     @Override
     public String toString() {
         return "TaskDTO{" +
-            "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", description='" + getDescription() + "'" +
-            "}";
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", description='" + description + '\'' +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
+            ", status=" + status +
+            ", jobId=" + jobId +
+            ", jobTitle='" + jobTitle + '\'' +
+            '}';
     }
 }

@@ -2,22 +2,22 @@
   "startApp": {
     "department": {
       "home": {
-        "title": "部门",
-        "createLabel": "创建新部门",
-        "createOrEditLabel": "创建或编辑部门"
+        "title": "团队",
+        "createLabel": "创建新团队",
+        "createOrEditLabel": "创建或编辑团队"
       },
-      "created": "部门 {{ param }} 创建成功",
-      "updated": "部门 {{ param }} 更新成功",
-      "deleted": "部门 {{ param }} 删除成功",
+      "created": "团队 {{ param }} 创建成功",
+      "updated": "团队 {{ param }} 更新成功",
+      "deleted": "团队 {{ param }} 删除成功",
       "delete": {
-        "question": "你确定要删除 部门 {{ id }} 吗？"
+        "question": "你确定要删除 团队 {{ id }} 吗？"
       },
       "detail": {
-        "title": "部门"
+        "title": "团队"
       },
-      "departmentName": "部门名字",
-      "location": "位置",
-      "employee": "员工"
+      "departmentName": "团队名字",
+      "country": "所属国家",
+      "employee": "人员"
     }
   }
 }

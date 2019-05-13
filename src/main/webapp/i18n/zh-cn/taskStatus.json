@@ -1,0 +1,11 @@
+{
+  "startApp": {
+    "TaskStatus": {
+      "null": "",
+      "RELEASING": "已发布",
+      "PAUSING": "暂停中",
+      "WORKING": "工作中",
+      "ENDING": "已结束"
+    }
+  }
+}

@@ -16,8 +16,13 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="jobTitle"><span jhiTranslate="startApp.job.jobTitle">Job Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="startApp.job.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="minSalary"><span jhiTranslate="startApp.job.minSalary">Min Salary</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="maxSalary"><span jhiTranslate="startApp.job.maxSalary">Max Salary</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="deliveryDate"><span jhiTranslate="startApp.job.deliveryDate">Delivery Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="startDate"><span jhiTranslate="startApp.job.startDate">Start Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="endDate"><span jhiTranslate="startApp.job.endDate">End Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="startApp.job.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="employeeId"><span jhiTranslate="startApp.job.employee">Employee</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
@@ -26,8 +31,13 @@
             <tr *ngFor="let job of jobs ;trackBy: trackId">
                 <td><a [routerLink]="['/job', job.id, 'view' ]">{{job.id}}</a></td>
                 <td>{{job.jobTitle}}</td>
+                <td>{{job.description}}</td>
                 <td>{{job.minSalary}}</td>
                 <td>{{job.maxSalary}}</td>
+                <td>{{job.deliveryDate | date:'medium'}}</td>
+                <td>{{job.startDate | date:'medium'}}</td>
+                <td>{{job.endDate | date:'medium'}}</td>
+                <td jhiTranslate="{{'startApp.JobStatus.' + job.status}}">{{job.status}}</td>
                 <td>
                     <div *ngIf="job.employeeId">
                         <a [routerLink]="['../employee', job.employeeId , 'view' ]" >{{job.employeeName}}</a>

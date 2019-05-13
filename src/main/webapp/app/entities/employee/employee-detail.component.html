@@ -5,7 +5,11 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="startApp.employee.firstName" [ngbTooltip]="'startApp.employee.help.firstName' | translate">First Name</span></dt>
+                <dt><span jhiTranslate="startApp.employee.login">Login</span></dt>
+                <dd>
+                    <span>{{employee.login}}</span>
+                </dd>
+                <dt><span jhiTranslate="startApp.employee.firstName">First Name</span></dt>
                 <dd>
                     <span>{{employee.firstName}}</span>
                 </dd>
@@ -21,17 +25,9 @@
                 <dd>
                     <span>{{employee.phoneNumber}}</span>
                 </dd>
-                <dt><span jhiTranslate="startApp.employee.hireDate">Hire Date</span></dt>
-                <dd>
-                    <span>{{employee.hireDate}}</span>
-                </dd>
                 <dt><span jhiTranslate="startApp.employee.salary">Salary</span></dt>
                 <dd>
                     <span>{{employee.salary}}</span>
-                </dd>
-                <dt><span jhiTranslate="startApp.employee.commissionPct">Commission Pct</span></dt>
-                <dd>
-                    <span>{{employee.commissionPct}}</span>
                 </dd>
                 <dt><span jhiTranslate="startApp.employee.department">Department</span></dt>
                 <dd>
@@ -39,11 +35,9 @@
                         <a [routerLink]="['/department', employee.departmentId, 'view']">{{employee.departmentName}}</a>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="startApp.employee.manager">Manager</span></dt>
+                <dt><span jhiTranslate="startApp.employee.user">User</span></dt>
                 <dd>
-                    <div *ngIf="employee.managerId">
-                        <a [routerLink]="['/employee', employee.managerId, 'view']">{{employee.managerName}}</a>
-                    </div>
+                    {{employee.userId}}
                 </dd>
             </dl>
 

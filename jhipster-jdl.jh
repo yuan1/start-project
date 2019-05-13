@@ -6,15 +6,6 @@ entity Country {
 	countryName String
 }
 
-// an ignored comment
-/** not an ignored comment */
-entity Location {
-	streetAddress String,
-	postalCode String,
-	city String,
-	stateProvince String
-}
-
 entity Department {
 	departmentName String required
 }
@@ -25,79 +16,51 @@ entity Department {
  */
 entity Task {
 	title String,
-	description String
+	description String,
+	startDate Instant,
+	endDate Instant,
+    status TaskStatus
 }
 
 /**
  * The Employee entity.
  */
 entity Employee {
-	/**
-	* The firstname attribute.
-	*/
+    login String,
 	firstName String,
 	lastName String,
 	email String,
 	phoneNumber String,
-	hireDate Instant,
-	salary Long,
-	commissionPct Long
+	salary Long
 }
 
 entity Job {
 	jobTitle String,
+	description String,
 	minSalary Long,
-	maxSalary Long
-}
-
-entity JobHistory {
+	maxSalary Long,
+	deliveryDate Instant,
 	startDate Instant,
 	endDate Instant,
-	language Language
+    status JobStatus
 }
 
-enum Language {
-    CHINESE, ENGLISH, SPANISH
+enum JobStatus {
+    RELEASING, WORKING, ENDING
 }
-
+enum TaskStatus {
+    RELEASING, PAUSING, WORKING, ENDING
+}
 relationship OneToOne {
-	Country{region} to Region
+	Country{region} to Region,
+	Department{country} to Country,
+	Employee{user} to User,
 }
-
-relationship OneToOne {
-	Location{country} to Country
-}
-
-relationship OneToOne {
-	Department{location} to Location
-}
-
-relationship ManyToMany {
-	Job{task(title)} to Task{job}
-}
-
 // defining multiple OneToMany relationships with comments
 relationship OneToMany {
 	Employee{job} to Job,
-	/**
-	* A relationship
-	*/
-	Department{employee} to
-	/**
-	* Another side of the same relationship
-	*/
-	Employee
-}
-
-relationship ManyToOne {
-	Employee{manager} to Employee
-}
-
-// defining multiple oneToOne relationships
-relationship OneToOne {
-	JobHistory{job} to Job,
-	JobHistory{department} to Department,
-	JobHistory{employee} to Employee
+	Department{employee} to Employee,
+	Job{task} to Task
 }
 
 // Set pagination options

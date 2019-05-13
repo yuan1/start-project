@@ -1,0 +1,10 @@
+{
+  "startApp": {
+    "JobStatus": {
+      "null": "",
+      "RELEASING": "已发布",
+      "WORKING": "工作中",
+      "ENDING": "已结束"
+    }
+  }
+}

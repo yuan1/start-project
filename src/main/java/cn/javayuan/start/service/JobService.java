@@ -28,13 +28,7 @@ public interface JobService {
      */
     Page<JobDTO> findAll(Pageable pageable);
 
-    /**
-     * Get all the jobs with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    Page<JobDTO> findAllWithEagerRelationships(Pageable pageable);
-    
+
     /**
      * Get the "id" job.
      *

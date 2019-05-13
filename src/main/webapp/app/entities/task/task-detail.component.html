@@ -13,6 +13,24 @@
                 <dd>
                     <span>{{task.description}}</span>
                 </dd>
+                <dt><span jhiTranslate="startApp.task.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{task.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="startApp.task.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{task.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="startApp.task.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'startApp.TaskStatus.' + task.status}}">{{task.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="startApp.task.job">Job</span></dt>
+                <dd>
+                    <div *ngIf="task.jobId">
+                        <a [routerLink]="['/job', task.jobId, 'view']">{{task.jobTitle}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

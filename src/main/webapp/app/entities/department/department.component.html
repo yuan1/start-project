@@ -16,7 +16,7 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="departmentName"><span jhiTranslate="startApp.department.departmentName">Department Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="locationId"><span jhiTranslate="startApp.department.location">Location</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="countryId"><span jhiTranslate="startApp.department.country">Country</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -25,8 +25,8 @@
                 <td><a [routerLink]="['/department', department.id, 'view' ]">{{department.id}}</a></td>
                 <td>{{department.departmentName}}</td>
                 <td>
-                    <div *ngIf="department.locationId">
-                        <a [routerLink]="['../location', department.locationId , 'view' ]" >{{department.streetAddress}}</a>
+                    <div *ngIf="department.countryId">
+                        <a [routerLink]="['../country', department.countryId , 'view' ]" >{{department.countryName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

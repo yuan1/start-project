@@ -4,6 +4,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { ITask, Task } from 'app/shared/model/task.model';
 import { TaskService } from './task.service';
@@ -23,7 +25,11 @@ export class TaskUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     title: [],
-    description: []
+    description: [],
+    startDate: [],
+    endDate: [],
+    status: [],
+    jobId: []
   });
 
   constructor(
@@ -53,7 +59,11 @@ export class TaskUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: task.id,
       title: task.title,
-      description: task.description
+      description: task.description,
+      startDate: task.startDate != null ? task.startDate.format(DATE_TIME_FORMAT) : null,
+      endDate: task.endDate != null ? task.endDate.format(DATE_TIME_FORMAT) : null,
+      status: task.status,
+      jobId: task.jobId
     });
   }
 
@@ -76,7 +86,12 @@ export class TaskUpdateComponent implements OnInit {
       ...new Task(),
       id: this.editForm.get(['id']).value,
       title: this.editForm.get(['title']).value,
-      description: this.editForm.get(['description']).value
+      description: this.editForm.get(['description']).value,
+      startDate:
+        this.editForm.get(['startDate']).value != null ? moment(this.editForm.get(['startDate']).value, DATE_TIME_FORMAT) : undefined,
+      endDate: this.editForm.get(['endDate']).value != null ? moment(this.editForm.get(['endDate']).value, DATE_TIME_FORMAT) : undefined,
+      status: this.editForm.get(['status']).value,
+      jobId: this.editForm.get(['jobId']).value
     };
     return entity;
   }
@@ -99,16 +114,5 @@ export class TaskUpdateComponent implements OnInit {
 
   trackJobById(index: number, item: IJob) {
     return item.id;
-  }
-
-  getSelected(selectedVals: Array<any>, option: any) {
-    if (selectedVals) {
-      for (let i = 0; i < selectedVals.length; i++) {
-        if (option.id === selectedVals[i].id) {
-          return selectedVals[i];
-        }
-      }
-    }
-    return option;
   }
 }

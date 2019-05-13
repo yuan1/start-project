@@ -4,13 +4,12 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { IEmployee, Employee } from 'app/shared/model/employee.model';
 import { EmployeeService } from './employee.service';
 import { IDepartment } from 'app/shared/model/department.model';
 import { DepartmentService } from 'app/entities/department';
+import { IUser, UserService } from 'app/core';
 
 @Component({
   selector: 'jhi-employee-update',
@@ -22,25 +21,25 @@ export class EmployeeUpdateComponent implements OnInit {
 
   departments: IDepartment[];
 
-  employees: IEmployee[];
+  users: IUser[];
 
   editForm = this.fb.group({
     id: [],
+    login: [],
     firstName: [],
     lastName: [],
     email: [],
     phoneNumber: [],
-    hireDate: [],
     salary: [],
-    commissionPct: [],
     departmentId: [],
-    managerId: []
+    userId: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected employeeService: EmployeeService,
     protected departmentService: DepartmentService,
+    protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -58,27 +57,26 @@ export class EmployeeUpdateComponent implements OnInit {
         map((response: HttpResponse<IDepartment[]>) => response.body)
       )
       .subscribe((res: IDepartment[]) => (this.departments = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.employeeService
+    this.userService
       .query()
       .pipe(
-        filter((mayBeOk: HttpResponse<IEmployee[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IEmployee[]>) => response.body)
+        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IUser[]>) => response.body)
       )
-      .subscribe((res: IEmployee[]) => (this.employees = res), (res: HttpErrorResponse) => this.onError(res.message));
+      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(employee: IEmployee) {
     this.editForm.patchValue({
       id: employee.id,
+      login: employee.login,
       firstName: employee.firstName,
       lastName: employee.lastName,
       email: employee.email,
       phoneNumber: employee.phoneNumber,
-      hireDate: employee.hireDate != null ? employee.hireDate.format(DATE_TIME_FORMAT) : null,
       salary: employee.salary,
-      commissionPct: employee.commissionPct,
       departmentId: employee.departmentId,
-      managerId: employee.managerId
+      userId: employee.userId
     });
   }
 
@@ -100,15 +98,14 @@ export class EmployeeUpdateComponent implements OnInit {
     const entity = {
       ...new Employee(),
       id: this.editForm.get(['id']).value,
+      login: this.editForm.get(['login']).value,
       firstName: this.editForm.get(['firstName']).value,
       lastName: this.editForm.get(['lastName']).value,
       email: this.editForm.get(['email']).value,
       phoneNumber: this.editForm.get(['phoneNumber']).value,
-      hireDate: this.editForm.get(['hireDate']).value != null ? moment(this.editForm.get(['hireDate']).value, DATE_TIME_FORMAT) : undefined,
       salary: this.editForm.get(['salary']).value,
-      commissionPct: this.editForm.get(['commissionPct']).value,
       departmentId: this.editForm.get(['departmentId']).value,
-      managerId: this.editForm.get(['managerId']).value
+      userId: this.editForm.get(['userId']).value
     };
     return entity;
   }
@@ -133,7 +130,7 @@ export class EmployeeUpdateComponent implements OnInit {
     return item.id;
   }
 
-  trackEmployeeById(index: number, item: IEmployee) {
+  trackUserById(index: number, item: IUser) {
     return item.id;
   }
 }

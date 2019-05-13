@@ -3,22 +3,27 @@
     "job": {
       "home": {
         "title": "工作",
-        "createLabel": "创建新工作",
-        "createOrEditLabel": "创建或编辑工作"
+        "createLabel": "创建新 工作",
+        "createOrEditLabel": "创建或编辑 工作"
       },
       "created": "工作 {{ param }} 创建成功",
       "updated": "工作 {{ param }} 更新成功",
       "deleted": "工作 {{ param }} 删除成功",
       "delete": {
-        "question": "你确定要删除工作 {{ id }} 吗？"
+        "question": "你确定要删除 工作 {{ id }} 吗？"
       },
       "detail": {
         "title": "工作"
       },
-      "jobTitle": "工作标题",
-      "minSalary": "最低工资",
-      "maxSalary": "最高工资",
-      "employee": "员工",
+      "jobTitle": "标题",
+      "description": "介绍",
+      "minSalary": "最小薪资",
+      "maxSalary": "最大薪资",
+      "deliveryDate": "交付日期",
+      "startDate": "开始时间",
+      "endDate": "结束时间",
+      "status": "状态",
+      "employee": "人员",
       "task": "任务"
     }
   }

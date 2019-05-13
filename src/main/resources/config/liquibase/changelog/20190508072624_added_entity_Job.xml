@@ -26,11 +26,31 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="min_salary" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <column name="max_salary" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="delivery_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="start_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="end_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -41,6 +61,9 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
 
+        <dropDefaultValue tableName="job" columnName="delivery_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="job" columnName="start_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="job" columnName="end_date" columnDataType="datetime"/>
     </changeSet>
 
     <!--
@@ -59,24 +82,18 @@
                   context="dev">
             <column name="id" type="numeric"/>
             <column name="job_title" type="string"/>
+            <column name="description" type="string"/>
             <column name="min_salary" type="numeric"/>
             <column name="max_salary" type="numeric"/>
+            <column name="delivery_date" type="date"/>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column name="status" type="string"/>
         </loadData>
     </changeSet>
 
     <changeSet id="20190508072624-1-relations" author="jhipster">
 
-        <createTable tableName="job_task">
-            <column name="task_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="job_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="job_id, task_id" tableName="job_task"/>
-        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

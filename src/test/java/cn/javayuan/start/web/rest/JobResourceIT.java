@@ -10,12 +10,9 @@ import cn.javayuan.start.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -25,16 +22,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static cn.javayuan.start.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import cn.javayuan.start.domain.enumeration.JobStatus;
 /**
  * Integration tests for the {@Link JobResource} REST controller.
  */
@@ -44,23 +42,32 @@ public class JobResourceIT {
     private static final String DEFAULT_JOB_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_JOB_TITLE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
     private static final Long DEFAULT_MIN_SALARY = 1L;
     private static final Long UPDATED_MIN_SALARY = 2L;
 
     private static final Long DEFAULT_MAX_SALARY = 1L;
     private static final Long UPDATED_MAX_SALARY = 2L;
 
+    private static final Instant DEFAULT_DELIVERY_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DELIVERY_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_START_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_START_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_END_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final JobStatus DEFAULT_STATUS = JobStatus.RELEASING;
+    private static final JobStatus UPDATED_STATUS = JobStatus.WORKING;
+
     @Autowired
     private JobRepository jobRepository;
 
-    @Mock
-    private JobRepository jobRepositoryMock;
-
     @Autowired
     private JobMapper jobMapper;
-
-    @Mock
-    private JobService jobServiceMock;
 
     @Autowired
     private JobService jobService;
@@ -105,8 +112,13 @@ public class JobResourceIT {
     public static Job createEntity(EntityManager em) {
         Job job = new Job()
             .jobTitle(DEFAULT_JOB_TITLE)
+            .description(DEFAULT_DESCRIPTION)
             .minSalary(DEFAULT_MIN_SALARY)
-            .maxSalary(DEFAULT_MAX_SALARY);
+            .maxSalary(DEFAULT_MAX_SALARY)
+            .deliveryDate(DEFAULT_DELIVERY_DATE)
+            .startDate(DEFAULT_START_DATE)
+            .endDate(DEFAULT_END_DATE)
+            .status(DEFAULT_STATUS);
         return job;
     }
 
@@ -132,8 +144,13 @@ public class JobResourceIT {
         assertThat(jobList).hasSize(databaseSizeBeforeCreate + 1);
         Job testJob = jobList.get(jobList.size() - 1);
         assertThat(testJob.getJobTitle()).isEqualTo(DEFAULT_JOB_TITLE);
+        assertThat(testJob.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testJob.getMinSalary()).isEqualTo(DEFAULT_MIN_SALARY);
         assertThat(testJob.getMaxSalary()).isEqualTo(DEFAULT_MAX_SALARY);
+        assertThat(testJob.getDeliveryDate()).isEqualTo(DEFAULT_DELIVERY_DATE);
+        assertThat(testJob.getStartDate()).isEqualTo(DEFAULT_START_DATE);
+        assertThat(testJob.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testJob.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -169,43 +186,15 @@ public class JobResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(job.getId().intValue())))
             .andExpect(jsonPath("$.[*].jobTitle").value(hasItem(DEFAULT_JOB_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].minSalary").value(hasItem(DEFAULT_MIN_SALARY.intValue())))
-            .andExpect(jsonPath("$.[*].maxSalary").value(hasItem(DEFAULT_MAX_SALARY.intValue())));
+            .andExpect(jsonPath("$.[*].maxSalary").value(hasItem(DEFAULT_MAX_SALARY.intValue())))
+            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
-    @SuppressWarnings({"unchecked"})
-    public void getAllJobsWithEagerRelationshipsIsEnabled() throws Exception {
-        JobResource jobResource = new JobResource(jobServiceMock);
-        when(jobServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        MockMvc restJobMockMvc = MockMvcBuilders.standaloneSetup(jobResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restJobMockMvc.perform(get("/api/jobs?eagerload=true"))
-        .andExpect(status().isOk());
-
-        verify(jobServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public void getAllJobsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        JobResource jobResource = new JobResource(jobServiceMock);
-            when(jobServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restJobMockMvc = MockMvcBuilders.standaloneSetup(jobResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restJobMockMvc.perform(get("/api/jobs?eagerload=true"))
-        .andExpect(status().isOk());
-
-            verify(jobServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
     @Test
     @Transactional
     public void getJob() throws Exception {
@@ -218,8 +207,13 @@ public class JobResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(job.getId().intValue()))
             .andExpect(jsonPath("$.jobTitle").value(DEFAULT_JOB_TITLE.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.minSalary").value(DEFAULT_MIN_SALARY.intValue()))
-            .andExpect(jsonPath("$.maxSalary").value(DEFAULT_MAX_SALARY.intValue()));
+            .andExpect(jsonPath("$.maxSalary").value(DEFAULT_MAX_SALARY.intValue()))
+            .andExpect(jsonPath("$.deliveryDate").value(DEFAULT_DELIVERY_DATE.toString()))
+            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -244,8 +238,13 @@ public class JobResourceIT {
         em.detach(updatedJob);
         updatedJob
             .jobTitle(UPDATED_JOB_TITLE)
+            .description(UPDATED_DESCRIPTION)
             .minSalary(UPDATED_MIN_SALARY)
-            .maxSalary(UPDATED_MAX_SALARY);
+            .maxSalary(UPDATED_MAX_SALARY)
+            .deliveryDate(UPDATED_DELIVERY_DATE)
+            .startDate(UPDATED_START_DATE)
+            .endDate(UPDATED_END_DATE)
+            .status(UPDATED_STATUS);
         JobDTO jobDTO = jobMapper.toDto(updatedJob);
 
         restJobMockMvc.perform(put("/api/jobs")
@@ -258,8 +257,13 @@ public class JobResourceIT {
         assertThat(jobList).hasSize(databaseSizeBeforeUpdate);
         Job testJob = jobList.get(jobList.size() - 1);
         assertThat(testJob.getJobTitle()).isEqualTo(UPDATED_JOB_TITLE);
+        assertThat(testJob.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testJob.getMinSalary()).isEqualTo(UPDATED_MIN_SALARY);
         assertThat(testJob.getMaxSalary()).isEqualTo(UPDATED_MAX_SALARY);
+        assertThat(testJob.getDeliveryDate()).isEqualTo(UPDATED_DELIVERY_DATE);
+        assertThat(testJob.getStartDate()).isEqualTo(UPDATED_START_DATE);
+        assertThat(testJob.getEndDate()).isEqualTo(UPDATED_END_DATE);
+        assertThat(testJob.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

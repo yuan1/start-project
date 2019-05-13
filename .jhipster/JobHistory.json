@@ -8,35 +8,20 @@
         {
             "fieldName": "endDate",
             "fieldType": "Instant"
-        },
-        {
-            "fieldName": "language",
-            "fieldType": "Language",
-            "fieldValues": "CHINESE,ENGLISH,SPANISH"
         }
     ],
     "relationships": [
+        {
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
         {
             "relationshipType": "one-to-one",
             "otherEntityName": "job",
             "otherEntityRelationshipName": "jobHistory",
             "relationshipName": "job",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "department",
-            "otherEntityRelationshipName": "jobHistory",
-            "relationshipName": "department",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "employee",
-            "otherEntityRelationshipName": "jobHistory",
-            "relationshipName": "employee",
             "otherEntityField": "id",
             "ownerSide": true
         }

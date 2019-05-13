@@ -15,19 +15,15 @@
       "detail": {
         "title": "Employee"
       },
+      "login": "Login",
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email",
       "phoneNumber": "Phone Number",
-      "hireDate": "Hire Date",
       "salary": "Salary",
-      "commissionPct": "Commission Pct",
       "department": "Department",
-      "job": "Job",
-      "manager": "Manager",
-      "help": {
-        "firstName": "The firstname attribute."
-      }
+      "user": "User",
+      "job": "Job"
     }
   }
 }

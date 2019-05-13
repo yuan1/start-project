@@ -1,7 +1,7 @@
 package cn.javayuan.start.service.dto;
+
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import java.time.Instant;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,10 +13,8 @@ public class EmployeeDTO implements Serializable {
 
     private Long id;
 
-    /**
-     * The firstname attribute.
-     */
-    @ApiModelProperty(value = "The firstname attribute.")
+    private String login;
+
     private String firstName;
 
     private String lastName;
@@ -25,18 +23,20 @@ public class EmployeeDTO implements Serializable {
 
     private String phoneNumber;
 
-    private Instant hireDate;
-
     private Long salary;
-
-    private Long commissionPct;
 
 
     private Long departmentId;
     private String departmentName;
-    private String managerName;
+    private Long userId;
 
-    private Long managerId;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDepartmentName() {
         return departmentName;
@@ -46,20 +46,12 @@ public class EmployeeDTO implements Serializable {
         this.departmentName = departmentName;
     }
 
-    public String getManagerName() {
-        return managerName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setManagerName(String managerName) {
-        this.managerName = managerName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getFirstName() {
@@ -94,28 +86,12 @@ public class EmployeeDTO implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Instant getHireDate() {
-        return hireDate;
-    }
-
-    public void setHireDate(Instant hireDate) {
-        this.hireDate = hireDate;
-    }
-
     public Long getSalary() {
         return salary;
     }
 
     public void setSalary(Long salary) {
         this.salary = salary;
-    }
-
-    public Long getCommissionPct() {
-        return commissionPct;
-    }
-
-    public void setCommissionPct(Long commissionPct) {
-        this.commissionPct = commissionPct;
     }
 
     public Long getDepartmentId() {
@@ -126,12 +102,12 @@ public class EmployeeDTO implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Long getManagerId() {
-        return managerId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setManagerId(Long employeeId) {
-        this.managerId = employeeId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -159,17 +135,15 @@ public class EmployeeDTO implements Serializable {
     public String toString() {
         return "EmployeeDTO{" +
             "id=" + id +
+            ", login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
             ", phoneNumber='" + phoneNumber + '\'' +
-            ", hireDate=" + hireDate +
             ", salary=" + salary +
-            ", commissionPct=" + commissionPct +
             ", departmentId=" + departmentId +
             ", departmentName='" + departmentName + '\'' +
-            ", managerName='" + managerName + '\'' +
-            ", managerId=" + managerId +
+            ", userId=" + userId +
             '}';
     }
 }

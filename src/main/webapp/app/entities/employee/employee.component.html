@@ -15,37 +15,32 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="login"><span jhiTranslate="startApp.employee.login">Login</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="firstName"><span jhiTranslate="startApp.employee.firstName">First Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="lastName"><span jhiTranslate="startApp.employee.lastName">Last Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="email"><span jhiTranslate="startApp.employee.email">Email</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="phoneNumber"><span jhiTranslate="startApp.employee.phoneNumber">Phone Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="hireDate"><span jhiTranslate="startApp.employee.hireDate">Hire Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="salary"><span jhiTranslate="startApp.employee.salary">Salary</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="commissionPct"><span jhiTranslate="startApp.employee.commissionPct">Commission Pct</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="departmentId"><span jhiTranslate="startApp.employee.department">Department</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="managerId"><span jhiTranslate="startApp.employee.manager">Manager</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let employee of employees ;trackBy: trackId">
                 <td><a [routerLink]="['/employee', employee.id, 'view' ]">{{employee.id}}</a></td>
+                <td>{{employee.login}}</td>
                 <td>{{employee.firstName}}</td>
                 <td>{{employee.lastName}}</td>
                 <td>{{employee.email}}</td>
                 <td>{{employee.phoneNumber}}</td>
-                <td>{{employee.hireDate | date:'medium'}}</td>
                 <td>{{employee.salary}}</td>
-                <td>{{employee.commissionPct}}</td>
                 <td>
                     <div *ngIf="employee.departmentId">
                         <a [routerLink]="['../department', employee.departmentId , 'view' ]" >{{employee.departmentName}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="employee.managerId">
-                        <a [routerLink]="['../employee', employee.managerId , 'view' ]" >{{employee.managerName}}</a>
-                    </div>
+                    {{employee.userId}}
                 </td>
                 <td class="text-right">
                     <div class="btn-group">

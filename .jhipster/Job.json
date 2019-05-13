@@ -6,12 +6,33 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "minSalary",
             "fieldType": "Long"
         },
         {
             "fieldName": "maxSalary",
             "fieldType": "Long"
+        },
+        {
+            "fieldName": "deliveryDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "JobStatus",
+            "fieldValues": "RELEASING,WORKING,ENDING"
         }
     ],
     "relationships": [
@@ -22,12 +43,10 @@
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "many-to-many",
+            "relationshipType": "one-to-many",
             "otherEntityName": "task",
             "otherEntityRelationshipName": "job",
-            "relationshipName": "task",
-            "otherEntityField": "title",
-            "ownerSide": true
+            "relationshipName": "task"
         }
     ],
     "changelogDate": "20190508072624",

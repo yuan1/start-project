@@ -1,6 +1,7 @@
 package cn.javayuan.start.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -8,9 +9,12 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+
+import cn.javayuan.start.domain.enumeration.JobStatus;
 
 /**
  * A Job.
@@ -29,21 +33,34 @@ public class Job implements Serializable {
     @Column(name = "job_title")
     private String jobTitle;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "min_salary")
     private Long minSalary;
 
     @Column(name = "max_salary")
     private Long maxSalary;
 
+    @Column(name = "delivery_date")
+    private Instant deliveryDate;
+
+    @Column(name = "start_date")
+    private Instant startDate;
+
+    @Column(name = "end_date")
+    private Instant endDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private JobStatus status;
+
     @ManyToOne
     @JsonIgnoreProperties("jobs")
     private Employee employee;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "job")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "job_task",
-               joinColumns = @JoinColumn(name = "job_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"))
     private Set<Task> tasks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -66,6 +83,19 @@ public class Job implements Serializable {
 
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Job description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getMinSalary() {
@@ -94,6 +124,58 @@ public class Job implements Serializable {
         this.maxSalary = maxSalary;
     }
 
+    public Instant getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public Job deliveryDate(Instant deliveryDate) {
+        this.deliveryDate = deliveryDate;
+        return this;
+    }
+
+    public void setDeliveryDate(Instant deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public Instant getStartDate() {
+        return startDate;
+    }
+
+    public Job startDate(Instant startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public Job endDate(Instant endDate) {
+        this.endDate = endDate;
+        return this;
+    }
+
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
+    }
+
+    public JobStatus getStatus() {
+        return status;
+    }
+
+    public Job status(JobStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(JobStatus status) {
+        this.status = status;
+    }
+
     public Employee getEmployee() {
         return employee;
     }
@@ -118,13 +200,13 @@ public class Job implements Serializable {
 
     public Job addTask(Task task) {
         this.tasks.add(task);
-        task.getJobs().add(this);
+        task.setJob(this);
         return this;
     }
 
     public Job removeTask(Task task) {
         this.tasks.remove(task);
-        task.getJobs().remove(this);
+        task.setJob(null);
         return this;
     }
 
@@ -154,8 +236,13 @@ public class Job implements Serializable {
         return "Job{" +
             "id=" + getId() +
             ", jobTitle='" + getJobTitle() + "'" +
+            ", description='" + getDescription() + "'" +
             ", minSalary=" + getMinSalary() +
             ", maxSalary=" + getMaxSalary() +
+            ", deliveryDate='" + getDeliveryDate() + "'" +
+            ", startDate='" + getStartDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

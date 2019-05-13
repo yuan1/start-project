@@ -16,8 +16,13 @@
         "title": "Job"
       },
       "jobTitle": "Job Title",
+      "description": "Description",
       "minSalary": "Min Salary",
       "maxSalary": "Max Salary",
+      "deliveryDate": "Delivery Date",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "status": "Status",
       "employee": "Employee",
       "task": "Task"
     }

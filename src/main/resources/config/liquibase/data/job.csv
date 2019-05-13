@@ -1,11 +1,11 @@
-id;job_title;min_salary;max_salary
-1;National Operations Liaison;32665;52224
-2;Internal Accounts Engineer;21582;96525
-3;Investor Division Executive;84202;5168
-4;Dynamic Operations Administrator;54063;69951
-5;Dynamic Marketing Producer;13274;97585
-6;Principal Operations Developer;32295;4106
-7;Forward Markets Engineer;43352;43897
-8;Legacy Brand Engineer;2535;18433
-9;Principal Brand Assistant;42831;69597
-10;International Group Associate;17329;91521
+id;job_title;description;min_salary;max_salary;delivery_date;start_date;end_date;status
+1;Regional Data Representative;application;59865;59685;2019-05-13T03:49:41;2019-05-12T20:52:21;2019-05-13T03:49:43;RELEASING
+2;Investor Marketing Developer;Movies Producer;83244;93855;2019-05-13T02:28:34;2019-05-13T07:33:13;2019-05-13T03:12:31;RELEASING
+3;District Solutions Specialist;Investment Account Steel;29214;97375;2019-05-12T22:46:47;2019-05-13T01:59:09;2019-05-12T20:37:36;RELEASING
+4;Dynamic Markets Analyst;Mississippi Refined Rubber Chicken Table;6505;1326;2019-05-12T08:47:58;2019-05-12T08:57:35;2019-05-12T08:23:51;RELEASING
+5;Direct Integration Developer;infomediaries;12203;60999;2019-05-12T19:41:18;2019-05-12T11:34:33;2019-05-13T06:44:49;RELEASING
+6;Future Directives Technician;hardware Costa Rica Mayotte;18485;3131;2019-05-12T08:18:09;2019-05-12T11:21:28;2019-05-12T12:58:10;RELEASING
+7;Investor Assurance Representative;Awesome;19598;52083;2019-05-13T06:29:13;2019-05-12T08:30:16;2019-05-12T23:45:52;RELEASING
+8;National Usability Specialist;Faroe Islands Plastic;80219;16526;2019-05-13T05:46:59;2019-05-13T07:11:49;2019-05-12T07:53:14;RELEASING
+9;Lead Solutions Assistant;monitor;72900;79017;2019-05-12T13:03:43;2019-05-12T17:01:46;2019-05-13T05:47:43;RELEASING
+10;Investor Division Director;Fantastic Plastic Chicken;32518;66592;2019-05-12T14:03:43;2019-05-12T17:22:53;2019-05-12T16:16:16;RELEASING

@@ -4,8 +4,10 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JobService } from 'app/entities/job/job.service';
-import { IJob, Job } from 'app/shared/model/job.model';
+import { IJob, Job, JobStatus } from 'app/shared/model/job.model';
 
 describe('Service Tests', () => {
   describe('Job Service', () => {
@@ -14,6 +16,7 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: IJob;
     let expectedResult;
+    let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
@@ -22,13 +25,21 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(JobService);
       httpMock = injector.get(HttpTestingController);
+      currentDate = moment();
 
-      elemDefault = new Job(0, 'AAAAAAA', 0, 0);
+      elemDefault = new Job(0, 'AAAAAAA', 'AAAAAAA', 0, 0, currentDate, currentDate, currentDate, JobStatus.RELEASING);
     });
 
     describe('Service methods', () => {
       it('should find an element', async () => {
-        const returnedFromService = Object.assign({}, elemDefault);
+        const returnedFromService = Object.assign(
+          {
+            deliveryDate: currentDate.format(DATE_TIME_FORMAT),
+            startDate: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_TIME_FORMAT)
+          },
+          elemDefault
+        );
         service
           .find(123)
           .pipe(take(1))
@@ -42,11 +53,21 @@ describe('Service Tests', () => {
       it('should create a Job', async () => {
         const returnedFromService = Object.assign(
           {
-            id: 0
+            id: 0,
+            deliveryDate: currentDate.format(DATE_TIME_FORMAT),
+            startDate: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            deliveryDate: currentDate,
+            startDate: currentDate,
+            endDate: currentDate
+          },
+          returnedFromService
+        );
         service
           .create(new Job(null))
           .pipe(take(1))
@@ -60,13 +81,25 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             jobTitle: 'BBBBBB',
+            description: 'BBBBBB',
             minSalary: 1,
-            maxSalary: 1
+            maxSalary: 1,
+            deliveryDate: currentDate.format(DATE_TIME_FORMAT),
+            startDate: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_TIME_FORMAT),
+            status: 'BBBBBB'
           },
           elemDefault
         );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            deliveryDate: currentDate,
+            startDate: currentDate,
+            endDate: currentDate
+          },
+          returnedFromService
+        );
         service
           .update(expected)
           .pipe(take(1))
@@ -80,12 +113,24 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             jobTitle: 'BBBBBB',
+            description: 'BBBBBB',
             minSalary: 1,
-            maxSalary: 1
+            maxSalary: 1,
+            deliveryDate: currentDate.format(DATE_TIME_FORMAT),
+            startDate: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_TIME_FORMAT),
+            status: 'BBBBBB'
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            deliveryDate: currentDate,
+            startDate: currentDate,
+            endDate: currentDate
+          },
+          returnedFromService
+        );
         service
           .query(expected)
           .pipe(

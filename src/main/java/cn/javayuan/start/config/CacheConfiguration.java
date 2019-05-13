@@ -45,7 +45,6 @@ public class CacheConfiguration {
             createCache(cm, cn.javayuan.start.domain.User.class.getName() + ".authorities");
             createCache(cm, cn.javayuan.start.domain.Region.class.getName());
             createCache(cm, cn.javayuan.start.domain.Country.class.getName());
-            createCache(cm, cn.javayuan.start.domain.Location.class.getName());
             createCache(cm, cn.javayuan.start.domain.Department.class.getName());
             createCache(cm, cn.javayuan.start.domain.Department.class.getName() + ".employees");
             createCache(cm, cn.javayuan.start.domain.Task.class.getName());
@@ -54,7 +53,7 @@ public class CacheConfiguration {
             createCache(cm, cn.javayuan.start.domain.Employee.class.getName() + ".jobs");
             createCache(cm, cn.javayuan.start.domain.Job.class.getName());
             createCache(cm, cn.javayuan.start.domain.Job.class.getName() + ".tasks");
-            createCache(cm, cn.javayuan.start.domain.JobHistory.class.getName());
+            createCache(cm, cn.javayuan.start.domain.Employee.class.getName() + ".histories");
             // jhipster-needle-ehcache-add-entry
         };
     }

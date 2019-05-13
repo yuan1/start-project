@@ -1,5 +1,4 @@
 package cn.javayuan.start.service.dto;
-import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,23 +12,10 @@ public class DepartmentDTO implements Serializable {
 
     @NotNull
     private String departmentName;
-    private String streetAddress;
 
 
-    private Long locationId;
-
-    public String getStreetAddress() {
-        return streetAddress;
-    }
-
-    public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
-    }
-
-    /**
-     * A relationship
-     */
-    @ApiModelProperty(value = "A relationship")
+    private Long countryId;
+    private String countryName;
 
     public Long getId() {
         return id;
@@ -47,12 +33,20 @@ public class DepartmentDTO implements Serializable {
         this.departmentName = departmentName;
     }
 
-    public Long getLocationId() {
-        return locationId;
+    public Long getCountryId() {
+        return countryId;
     }
 
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
+    public void setCountryId(Long countryId) {
+        this.countryId = countryId;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     @Override
@@ -81,8 +75,8 @@ public class DepartmentDTO implements Serializable {
         return "DepartmentDTO{" +
             "id=" + id +
             ", departmentName='" + departmentName + '\'' +
-            ", streetAddress='" + streetAddress + '\'' +
-            ", locationId=" + locationId +
+            ", countryId=" + countryId +
+            ", countryName='" + countryName + '\'' +
             '}';
     }
 }

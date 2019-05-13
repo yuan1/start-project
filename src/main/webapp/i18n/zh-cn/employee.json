@@ -2,32 +2,28 @@
   "startApp": {
     "employee": {
       "home": {
-        "title": "员工",
-        "createLabel": "创建新员工",
-        "createOrEditLabel": "创建或编辑员工"
+        "title": "人员",
+        "createLabel": "创建新 人员",
+        "createOrEditLabel": "创建或编辑 人员"
       },
-      "created": "员工 {{ param }} 创建成功",
-      "updated": "员工 {{ param }} 更新成功",
-      "deleted": "员工 {{ param }} 删除成功",
+      "created": "人员 {{ param }} 创建成功",
+      "updated": "人员 {{ param }} 更新成功",
+      "deleted": "人员 {{ param }} 删除成功",
       "delete": {
-        "question": "你确定要删除员工 {{ id }} 吗？"
+        "question": "你确定要删除 人员 {{ id }} 吗？"
       },
       "detail": {
-        "title": "员工"
+        "title": "人员"
       },
+      "login": "登录名",
       "firstName": "名字",
       "lastName": "姓氏",
       "email": "邮箱",
-      "phoneNumber": "电话号码",
-      "hireDate": "租借日期",
-      "salary": "薪水",
-      "commissionPct": "佣金比",
-      "department": "部门",
-      "job": "工作",
-      "manager": "管理员",
-      "help": {
-        "firstName": "名字是必填项."
-      }
+      "phoneNumber": "联系方式",
+      "salary": "薪资",
+      "department": "团队",
+      "user": "人员",
+      "job": "工作"
     }
   }
 }

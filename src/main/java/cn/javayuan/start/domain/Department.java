@@ -33,11 +33,8 @@ public class Department implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private Location location;
+    private Country country;
 
-    /**
-     * A relationship
-     */
     @OneToMany(mappedBy = "department")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Employee> employees = new HashSet<>();
@@ -64,17 +61,17 @@ public class Department implements Serializable {
         this.departmentName = departmentName;
     }
 
-    public Location getLocation() {
-        return location;
+    public Country getCountry() {
+        return country;
     }
 
-    public Department location(Location location) {
-        this.location = location;
+    public Department country(Country country) {
+        this.country = country;
         return this;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public Set<Employee> getEmployees() {

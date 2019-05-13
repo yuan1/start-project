@@ -2,8 +2,11 @@
     "name": "Employee",
     "fields": [
         {
+            "fieldName": "login",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "firstName",
-            "javadoc": "The firstname attribute.",
             "fieldType": "String"
         },
         {
@@ -19,15 +22,7 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "hireDate",
-            "fieldType": "Instant"
-        },
-        {
             "fieldName": "salary",
-            "fieldType": "Long"
-        },
-        {
-            "fieldName": "commissionPct",
             "fieldType": "Long"
         }
     ],
@@ -39,17 +34,18 @@
             "otherEntityField": "id"
         },
         {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "employee",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
             "relationshipType": "one-to-many",
             "otherEntityName": "job",
             "otherEntityRelationshipName": "employee",
             "relationshipName": "job"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "employee",
-            "otherEntityRelationshipName": "employee",
-            "relationshipName": "manager",
-            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190508072623",

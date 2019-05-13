@@ -9,12 +9,10 @@
         "main": "数据",
         "region": "地区",
         "country": "国家",
-        "location": "位置",
-        "department": "部门",
+        "department": "团队",
         "task": "任务",
-        "employee": "员工",
+        "employee": "人员",
         "job": "工作",
-        "jobHistory": "工作历史",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

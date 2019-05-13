@@ -8,16 +8,27 @@
         {
             "fieldName": "description",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "TaskStatus",
+            "fieldValues": "RELEASING,PAUSING,WORKING,ENDING"
         }
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-many",
-            "otherEntityName": "job",
-            "otherEntityRelationshipName": "task",
             "relationshipName": "job",
-            "otherEntityField": "id",
-            "ownerSide": false
+            "otherEntityName": "job",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190508072622",
