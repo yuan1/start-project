@@ -13,6 +13,9 @@
         "task": "任务",
         "employee": "人员",
         "job": "工作",
+        "region": "Region",
+        "country": "Country",
+        "department": "Department",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

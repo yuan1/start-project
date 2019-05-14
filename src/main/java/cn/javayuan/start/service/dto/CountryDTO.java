@@ -71,10 +71,10 @@ public class CountryDTO implements Serializable {
     @Override
     public String toString() {
         return "CountryDTO{" +
-            "id=" + id +
-            ", countryName='" + countryName + '\'' +
-            ", regionId=" + regionId +
-            ", regionName='" + regionName + '\'' +
-            '}';
+            "id=" + getId() +
+            ", countryName='" + getCountryName() + "'" +
+            ", region=" + getRegionId() +
+            ", regionName=" + getRegionName() +
+            "}";
     }
 }

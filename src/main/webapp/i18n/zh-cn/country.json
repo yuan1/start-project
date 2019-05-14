@@ -2,21 +2,22 @@
   "startApp": {
     "country": {
       "home": {
-        "title": "国家",
-        "createLabel": "创建新国家",
-        "createOrEditLabel": "创建或编辑国家"
+        "title": "Countries",
+        "createLabel": "创建新 Country",
+        "createOrEditLabel": "创建或编辑 Country"
       },
-      "created": "国家 {{ param }} 创建成功",
-      "updated": "国家 {{ param }} 更新成功",
-      "deleted": "国家 {{ param }} 删除成功",
+      "created": "Country {{ param }} 创建成功",
+      "updated": "Country {{ param }} 更新成功",
+      "deleted": "Country {{ param }} 删除成功",
       "delete": {
-        "question": "你确定要删除 国家 {{ id }} 吗？"
+        "question": "你确定要删除 Country {{ id }} 吗？"
       },
       "detail": {
-        "title": "国家"
+        "title": "Country"
       },
-      "countryName": "国家名字",
-      "region": "地区"
+      "countryName": "Country Name",
+      "region": "Region",
+      "department": "Department"
     }
   }
 }

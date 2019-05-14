@@ -6,7 +6,14 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "country",
+            "otherEntityRelationshipName": "region",
+            "relationshipName": "country"
+        }
+    ],
     "changelogDate": "20190508072618",
     "entityTableName": "region",
     "dto": "mapstruct",

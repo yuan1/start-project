@@ -8,12 +8,16 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "region",
-            "otherEntityRelationshipName": "country",
             "relationshipName": "region",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "otherEntityName": "region",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "department",
+            "otherEntityRelationshipName": "country",
+            "relationshipName": "department"
         }
     ],
     "changelogDate": "20190508072619",

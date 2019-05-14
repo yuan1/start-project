@@ -27,14 +27,6 @@ import { RouterModule } from '@angular/router';
       {
         path: 'employee',
         loadChildren: './employee/employee.module#StartEmployeeModule'
-      },
-      {
-        path: 'job',
-        loadChildren: './job/job.module#StartJobModule'
-      },
-      {
-        path: 'department',
-        loadChildren: './department/department.module#StartDepartmentModule'
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

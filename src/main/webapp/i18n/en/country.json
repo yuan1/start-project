@@ -16,7 +16,8 @@
         "title": "Country"
       },
       "countryName": "Country Name",
-      "region": "Region"
+      "region": "Region",
+      "department": "Department"
     }
   }
 }

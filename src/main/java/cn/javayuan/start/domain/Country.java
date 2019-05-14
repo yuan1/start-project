@@ -1,12 +1,16 @@
 package cn.javayuan.start.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -26,9 +30,13 @@ public class Country implements Serializable {
     @Column(name = "country_name")
     private String countryName;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("countries")
     private Region region;
+
+    @OneToMany(mappedBy = "country")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Department> departments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -63,6 +71,31 @@ public class Country implements Serializable {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public Set<Department> getDepartments() {
+        return departments;
+    }
+
+    public Country departments(Set<Department> departments) {
+        this.departments = departments;
+        return this;
+    }
+
+    public Country addDepartment(Department department) {
+        this.departments.add(department);
+        department.setCountry(this);
+        return this;
+    }
+
+    public Country removeDepartment(Department department) {
+        this.departments.remove(department);
+        department.setCountry(null);
+        return this;
+    }
+
+    public void setDepartments(Set<Department> departments) {
+        this.departments = departments;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

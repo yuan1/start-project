@@ -11,12 +11,10 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "country",
-            "otherEntityRelationshipName": "department",
             "relationshipName": "country",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "otherEntityName": "country",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "one-to-many",

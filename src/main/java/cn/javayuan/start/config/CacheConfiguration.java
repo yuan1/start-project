@@ -54,6 +54,8 @@ public class CacheConfiguration {
             createCache(cm, cn.javayuan.start.domain.Job.class.getName());
             createCache(cm, cn.javayuan.start.domain.Job.class.getName() + ".tasks");
             createCache(cm, cn.javayuan.start.domain.Employee.class.getName() + ".histories");
+            createCache(cm, cn.javayuan.start.domain.Region.class.getName() + ".countries");
+            createCache(cm, cn.javayuan.start.domain.Country.class.getName() + ".departments");
             // jhipster-needle-ehcache-add-entry
         };
     }

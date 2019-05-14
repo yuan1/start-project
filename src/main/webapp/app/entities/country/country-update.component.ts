@@ -41,30 +41,12 @@ export class CountryUpdateComponent implements OnInit {
       this.country = country;
     });
     this.regionService
-      .query({ filter: 'country-is-null' })
+      .query()
       .pipe(
         filter((mayBeOk: HttpResponse<IRegion[]>) => mayBeOk.ok),
         map((response: HttpResponse<IRegion[]>) => response.body)
       )
-      .subscribe(
-        (res: IRegion[]) => {
-          if (!this.country.regionId) {
-            this.regions = res;
-          } else {
-            this.regionService
-              .find(this.country.regionId)
-              .pipe(
-                filter((subResMayBeOk: HttpResponse<IRegion>) => subResMayBeOk.ok),
-                map((subResponse: HttpResponse<IRegion>) => subResponse.body)
-              )
-              .subscribe(
-                (subRes: IRegion) => (this.regions = [subRes].concat(res)),
-                (subRes: HttpErrorResponse) => this.onError(subRes.message)
-              );
-          }
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+      .subscribe((res: IRegion[]) => (this.regions = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(country: ICountry) {

@@ -52,12 +52,12 @@ enum TaskStatus {
     RELEASING, PAUSING, WORKING, ENDING
 }
 relationship OneToOne {
-	Country{region} to Region,
-	Department{country} to Country,
 	Employee{user} to User,
 }
 // defining multiple OneToMany relationships with comments
 relationship OneToMany {
+	Region{country} to Country,
+	Country{department} to Department,
 	Employee{job} to Job,
 	Department{employee} to Employee,
 	Job{task} to Task
